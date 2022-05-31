@@ -15,3 +15,19 @@ Sales_fact = Sales_fact.withColumn("Unit_price", Sales_fact.Sales/Sales_fact.Qua
 Segment = df.select(col("Segment"))
 
 Segment = Segment.withColumnRenamed("Segment","Segment_type")
+customerpdf = Customer.toPandas()
+segmentpdf =  Segment.toPandas()
+productpdf = Product.toPandas()
+salesfactpdf = Sales_fact.toPandas()
+
+l=[]
+for i in range(1,Customer.count()+1):
+  l.append(i)
+
+customerpdf["Customer_SK"] = l
+segmentpdf["Segment_SK"] = l
+productpdf["Product_Sk"] = l
+salesfactpdf["Customer_SK"] = customerpdf["Customer_SK"]
+salesfactpdf["Segment_SK"] = segmentpdf["Segment_SK"]
+salesfactpdf["Product_SK"] = productpdf["Product_Sk"]
+salesfactpdf["Sales_Fact_SK"] = l
